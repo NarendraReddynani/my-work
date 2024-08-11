@@ -184,13 +184,13 @@ app.post('/login',async (req,res)=>{
 
 })
 
-app.post('/', async(req,res) => {
-    await db.collection("members").find({age:{$gte:30}}).toArray()
-    .then((result)=>{
-        res.json(result);
-    })
-    .catch((e)=>console.log(e))
-})
+// app.post('/', async(req,res) => {
+//     await db.collection("members").find({age:{$gte:30}}).toArray()
+//     .then((result)=>{
+//         res.json(result);
+//     })
+//     .catch((e)=>console.log(e))
+// })
 // app.post('/age',async (req,res)=>{
 //     const found=await db.collection('members').findOne({age:{$gte:30}})
 //     if(found){
