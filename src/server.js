@@ -297,7 +297,35 @@ app.post('/students', async (req, res) => {
 })
 
 
+app.post('/update', async (req, res) => {
+    try {
+        await db.collection("members").findOne({ Email: req.body.email });
+        console.log(result)
+        if (!result) {
+            return res.json({ error: "Email not found." });
+        }
 
+        if (result.Password === req.body.current) {
+            console.log(result)
+            if (req.body.newpassword === req.body.confirm) {
+                await db.collection("members").updateOne(
+                    { Email: req.body.email },
+                    { $set: { Password: req.body.newpassword } }
+                );
+
+                return res.json({ message: "Password updated successfully", values: result });
+            } else {
+                return res.json({ error: "New password and confirmation do not match." });
+            }
+        }
+         else {
+            return res.json({ error: "Incorrect old password. Please try again." });
+        }
+    } catch (e) {
+        console.log(e);
+        return res.json({ error: "An error occurred during the update. Please try again later." });
+    }
+});
 
 
 
